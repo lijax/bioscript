@@ -14,6 +14,22 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import generic_protein
 
+def usage():
+    usage = """Usage: python gb2fasta.py -i [input file] -o [output file] -t [output type]
+    
+Option:
+  -h,--help      Print this usage
+  -v,--verbose   Print progress information
+  -i,--input     The genbank file to be processed
+  -o,--output    The fasta file to be output to
+  -t,--type      Output type of fasta file [faa, fna, fasta]
+                  faa(default)   Extract the amino acid of all CDS
+                  fna            Extract the nucleotides of all CDS
+                  fasta          Extract nucleotide sequence in this genbank file
+"""
+
+    print usage
+
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "i:o:t:hv", ["input=", "output=", "type=", "help"])
@@ -108,21 +124,6 @@ def main():
     output_handle.close()
     input_handle.close()
 
-def usage():
-    usage = """Usage: python gb2fasta.py -i [input file] -o [output file] -t [output type]
-    
-Option:
-  -h,--help      Print this usage
-  -v,--verbose   Print progress information
-  -i,--input     The genbank file to be processed
-  -o,--output    The fasta file to be output to
-  -t,--type      Output type of fasta file [faa, fna, fasta]
-                  faa(default)   Extract the amino acid of all CDS
-                  fna            Extract the nucleotides of all CDS
-                  fasta          Extract nucleotide sequence in this genbank file
-"""
-
-    print usage
 
 if __name__ == "__main__":
     main()
