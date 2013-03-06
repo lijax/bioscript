@@ -2,7 +2,7 @@
 #   
 # python script template file
 #
-# @data: 2013-2-2
+# @date: 2013-2-2
 # @author: yeyanbo
 
 ##import other module
