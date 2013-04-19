@@ -11,3 +11,4 @@ Some shell, python, perl script for my own bioinformatics tasks.
 
 - `sample.py`		python script template file, adapt this to a working script
 - `gb2fasta.py`		convert genbank file to fasta, faa, fna file and extract CDS information
+- `gbinfo.py`		Extract genome information(length, gc, etc.)
