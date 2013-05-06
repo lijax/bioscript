@@ -60,7 +60,7 @@ def main():
 
     input_handle = open(infile, "r")
     output_handle = open(outfile, "w")
-    #caIndex = CodonAdaptationIndex() 
+    caIndex = CodonAdaptationIndex() 
     #output_handle.write("Accession, GI, Organism, Taxonomy, Length, GC, ORF, CodingLength, CodingPercentage, CodingGC, CodingGC1, CodingGC2, CodingGC3, CAI\n")
     output_handle.write("Accession, GI, Organism, Taxonomy, Length, GC, ORF, CodingLength, CodingPercentage, CodingGC, CodingGC1, CodingGC2, CodingGC3\n")
     for seq_record in SeqIO.parse(input_handle, "genbank") :
@@ -99,10 +99,10 @@ def main():
         coding_percentage = 1.0 * length_CDSs / length
         #cai = caIndex.cai_for_gene(str(concat_CDSs))
         
-        output_handle.write(re.sub(r"\.\d+", "", gb_id) + ", " + gb_gi + ", " + organism + ", " + ";".join(taxonomy) + ", " + str(length) + ", " + str("%.2f" % gc_content) + ", " + str(cds_count) + ", " + str(length_CDSs) + ", " + str("%.2f" % coding_percentage)  + ", " + ", ".join(str("%.2f" % x) for x in gc_CDSs) + "," + str("%.2f" % cai) + "\n")
+        #output_handle.write(re.sub(r"\.\d+", "", gb_id) + ", " + gb_gi + ", " + organism + ", " + ";".join(taxonomy) + ", " + str(length) + ", " + str("%.2f" % gc_content) + ", " + str(cds_count) + ", " + str(length_CDSs) + ", " + str("%.2f" % coding_percentage)  + ", " + ", ".join(str("%.2f" % x) for x in gc_CDSs) + "," + str("%.2f" % cai) + "\n")
         #output_handle.write(re.sub(r"\.\d+", "", gb_id) + ", " + gb_gi + ", " + organism + ", " + taxonomy[3] + ", " + str(length) + ", " + str("%.2f" % gc_content) + ", " + str(cds_count) + ", " + str(length_CDSs) + ", " + str("%.2f" % coding_percentage)  + ", " + ", ".join(str("%.2f" % x) for x in gc_CDSs) + "," + str("%.2f" % cai) + "\n")
         #output_handle.write(re.sub(r"\.\d+", "", gb_id) + ", " + gb_gi + ", " + organism + ", " + ";".join(taxonomy) + ", " + str(length) + ", " + str("%.2f" % gc_content) + ", " + str(cds_count) + ", " + str(length_CDSs) + ", " + str("%.2f" % coding_percentage)  + ", " + ", ".join(str("%.2f" % x) for x in gc_CDSs) + "," + "\n")
-        #output_handle.write(re.sub(r"\.\d+", "", gb_id) + ", " + gb_gi + ", " + organism + ", " + taxonomy[3] + ", " + str(length) + ", " + str("%.2f" % gc_content) + ", " + str(cds_count) + ", " + str(length_CDSs) + ", " + str("%.2f" % coding_percentage)  + ", " + ", ".join(str("%.2f" % x) for x in gc_CDSs) + "," + "\n")
+        output_handle.write(re.sub(r"\.\d+", "", gb_id) + ", " + gb_gi + ", " + organism + ", " + taxonomy[3] + ", " + str(length) + ", " + str("%.2f" % gc_content) + ", " + str(cds_count) + ", " + str(length_CDSs) + ", " + str("%.2f" % coding_percentage)  + ", " + ", ".join(str("%.2f" % x) for x in gc_CDSs) + "," + "\n")
     output_handle.close()
     input_handle.close()
 
