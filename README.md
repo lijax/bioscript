@@ -5,7 +5,7 @@ Some shell, python, perl script for my own bioinformatics tasks.
 ## Script Descriptions
 
 - `replace_str.sh`	for data mapping and replacement
-- `fasta_gi.sh`		remove fasta header information except GI and create information table 
+- `fasta_gi.sh`		remove all information in fasta header except needed one define by a given number and save the header information in a table 
 
 ----
 
