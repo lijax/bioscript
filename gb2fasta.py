@@ -92,9 +92,7 @@ def main():
             cds_count = 0 # count CDS in current record
             for seq_feature in seq_record.features :
                 if seq_feature.type == "CDS" :
-                    assert len(seq_feature.qualifiers['translation']) == 1
-                    
-                    cds_count += 1 
+                    #assert len(seq_feature.qualifiers['translation']) == 1
                     
                     strand = seq_feature.strand
                     
@@ -102,7 +100,7 @@ def main():
                     
                     location = re.sub(r"[^0-9\-]", "", location)
 
-                    product = ('product' in seq_feature.qualifiers) and seq_feature.qualifiers['product'][0] or seq_feature.qualifiers['gene'][0]
+                    product = ('product' in seq_feature.qualifiers) and seq_feature.qualifiers['product'][0] or ('gene' in seq_feature.qualifiers) and seq_feature.qualifiers['gene'][0] or 'unknown'
                     
                     product = product.replace("|", "");
 
@@ -110,19 +108,25 @@ def main():
                     
                     r = re.compile('GI.*')
                     
-                    gi = filter(r.match, xref)[0].replace("GI:", "")
+                    gi_xref = filter(r.match, xref)
+
+                    if not gi_xref:
+                        continue
+
+                    gi = gi_xref[0].replace("GI:", "")
+
+                    seq = seq_record.seq[seq_feature.location.start:seq_feature.location.end]
+                    if strand == -1:
+                        seq = seq.reverse_complement()
 
                     if outtype == "faa":
-                        seq = Seq(seq_feature.qualifiers['translation'][0] , generic_protein)
-                    else:
-                        seq = seq_record.seq[seq_feature.location.start:seq_feature.location.end]
-                        if strand == -1:
-                            seq = seq.reverse_complement()
+                        seq = seq.translate()
 
                     seq_fasta = SeqRecord(seq, id="gi|%s|gb|%s|or|%s|st|%s|lo|%s|gn|%s|tx|%s|" % (gi, seq_feature.qualifiers['protein_id'][0], cds_count, strand, location, seq_record.name, ";".join(taxonomy)), description="%s [%s]" % (product, organism))
                     
                     faa_record.append(seq_fasta)
-           
+                    
+                    cds_count += 1
     SeqIO.write(faa_record, output_handle, "fasta")
         
     output_handle.close()
